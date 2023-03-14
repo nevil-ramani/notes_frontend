@@ -4,7 +4,7 @@ import axios from 'axios';
 
 function App() {
   const [notes, setNotes] = useState();
-  const [formData, setFormData] = useState({title: " ", body: " "});
+  const [formData, setFormData] = useState({ title: " ", body: " " });
 
   useEffect(() => {
     fetchNotes();
@@ -30,22 +30,23 @@ function App() {
 
   //update createNote field
   const updateFormDataField = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
 
-    console.log({name, value});
+    console.log({ name, value });
 
     setFormData({
       ...formData,
-      [name] : value // without [] it's not work
-      
+      [name]: value // without [] it's not work
+
     })
-    console.log( {[name] : value});
+    console.log({ [name]: value });
 
   }
 
   const createNote = async (e) => {
-    
+
     e.preventDefault();
+
 
     console.log(formData.title);
     console.log(formData.body);
@@ -53,42 +54,72 @@ function App() {
     const res = await axios.post('http://localhost:3001/notes', formData);
     console.log(res);
 
-    
-    setNotes([...notes, res.data ]);
-    setFormData({title: "", body: ""});
-    
+
+    setNotes([...notes, res.data]);
+    setFormData({ title: "", body: "" });
+
+
   }
 
 
-return (
+  //delete note_______________________________________________________________________________
+
+  const deleteNote = async (id) => {
+    //delete the note
+    const res = await axios.delete(`http://localhost:3001/notes/${id}`);
+    console.log(res);
+
+
+
+    //update state
+
+    //filter data
+          // const ages = [32, 33, 16, 40, 50, 1, 2, 3];
+
+          // document.getElementById("demo").innerHTML = ages.filter(checkAdult);
+
+          // function checkAdult(age) {
+          //   return age >= 18;
+          //  }
+
+    const NewNotes = [...notes].filter((note) => {
+      return note._id !== id;
+    })
+    setNotes(NewNotes);
+  }
+  // __________________________________________________________________________________________________
+
+  return (
     <div className="App">
       <h1>Notes:</h1>
 
-  <div>
-  {/* //fetch notes */}
-      {notes && notes.map((note) => { // without 'is notes' condition it's not work
-        return (
-          <div key={note._id}>
-            <h3>{note.title}</h3>
-            <h5>{note.body}</h5>
-          </div>
-          
-        );
-      })}
-   </div>
+      <div>
+        {/* //fetch notes */}
+        {notes && notes.map((note) => { // without 'is notes' condition it's not work
+          return (
+            <div key={note._id}>
+              <h3>{note.title}</h3>
+              <h5>{note.body}</h5>
+              <button onClick={() => deleteNote(note._id)}>delete note</button>  {/*//Don't directly call functions in onClick event. It will recursively call the method. So make the onClick input as a callback method. */}
+              {/* https://stackoverflow.com/questions/44833583/expected-onclick-listener-to-be-a-function-instead-got-type-object-react-redu */}
+            </div>
 
-       <div>
-      <h1>create notes</h1>
-      <form onSubmit={createNote}>
-        <input onChange={updateFormDataField} value={createNote.title} name="title" />
-        <textarea onChange={updateFormDataField} value={createNote.body} name="body" />
-        <button type="submit"> create note</button>
-      </form>
+          );
+        })}
+      </div>
+
+      <div>
+        <h1>create notes</h1>
+        <form onSubmit={createNote}>
+          <input onChange={updateFormDataField} value={formData.title} name="title" />
+          <textarea onChange={updateFormDataField} value={formData.body} name="body" />
+          <button type="submit"> create note</button>
+        </form>
       </div>
 
 
     </div>
-);
+  );
 }
 
 export default App;
