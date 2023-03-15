@@ -4,7 +4,7 @@ import notesStore from './stores/notesStore';
 
 
 function App() {
-
+  
 
   const [notes, setNotes] = useState();
   const [formData, setFormData] = useState({ title: " ", body: " " });
