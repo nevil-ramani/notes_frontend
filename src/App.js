@@ -113,6 +113,12 @@ function App() {
     //update state & clear form
     
     // fetchNotes(); // not a good way
+    const newNotes = [...notes];
+    const updatedNoteIndex = notes.findIndex((note) => {
+      return note._id == updateNote._id;
+    })
+    newNotes[updatedNoteIndex] = res.data;
+    setNotes(newNotes);
 
 
     setUpdateNote({ _id: null, title: " ", body: " " });
