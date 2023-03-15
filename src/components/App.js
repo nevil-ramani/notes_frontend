@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
-import notesStore from './stores/notesStore';
+import notesStore from '../stores/notesStore';
 
 
 function App() {
