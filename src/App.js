@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import notesStore from './stores/notesStore';
 
 
 function App() {
@@ -10,22 +11,24 @@ function App() {
   const [updateNote, setUpdateNote] = useState({ _id: null, title: " ", body: " " });
 
   useEffect(() => {
-    fetchNotes();
+    stores.fetchNotes();
   }, [])
 
 
+  const stores = notesStore();
+
 //___________________________________________________________________________________________________________________
   // fetch notes
-  const fetchNotes = async () => {
-    //fetch the notes & set the state
-    try {
-      const res = await axios.get('http://localhost:3001/notes')
-      // console.log(res);
-      setNotes(res.data)
-    } catch (error) {
-      console.log(error)
-    }
-  };
+  // const fetchNotes = async () => {
+  //   //fetch the notes & set the state
+  //   try {
+  //     const res = await axios.get('http://localhost:3001/notes')
+  //     // console.log(res);
+  //     setNotes(res.data)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // };
 //___________________________________________________________________________________________________________________
   //create note
 
@@ -137,8 +140,9 @@ function App() {
 
       <h1>Notes:</h1>
       <div>
+        
         {/* //fetch notes */}
-        {notes && notes.map((note) => { // without 'is notes' condition it's not work
+        {stores.notes && stores.notes.map((note) => { // without 'is notes' condition it's not work
           return (
             <div key={note._id}>
               <h3>{note.title}</h3>
