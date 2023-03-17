@@ -11,11 +11,11 @@ function App() {
   const [updateNote, setUpdateNote] = useState({ _id: null, title: " ", body: " " });
 
   useEffect(() => {
-    stores.fetchNotes();
+    store.fetchNotes();
   }, [])
 
 
-  const stores = notesStore();
+  const store = notesStore();
 
 //___________________________________________________________________________________________________________________
   // fetch notes
@@ -142,7 +142,7 @@ function App() {
       <div>
         
         {/* //fetch notes */}
-        {stores.notes && stores.notes.map((note) => { // without 'is notes' condition it's not work
+        {store.notes && store.notes.map((note) => { // without 'is notes' condition it's not work
           return (
             <div key={note._id}>
               <h3>{note.title}</h3>
@@ -163,8 +163,8 @@ function App() {
           <div> 
             <h1>create notes</h1>
             <form onSubmit={createNote}>
-              <input onChange={updateFormDataField} value={formData.title} name="title" />
-              <textarea onChange={updateFormDataField} value={formData.body} name="body" />
+              <input onChange={store.updateFormDataField} value={formData.title} name="title" />
+              <textarea onChange={store.updateFormDataField} value={formData.body} name="body" />
               <button type="submit"> create note</button>
             </form>
           </div>
