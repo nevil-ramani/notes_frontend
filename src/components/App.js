@@ -162,9 +162,9 @@ function App() {
         {!updateNote._id && ( // must need to wrap in div tag
           <div> 
             <h1>create notes</h1>
-            <form onSubmit={createNote}>
-              <input onChange={store.updateFormDataField} value={formData.title} name="title" />
-              <textarea onChange={store.updateFormDataField} value={formData.body} name="body" />
+            <form onSubmit={store.createNote}>
+              <input onChange={store.updateFormDataField} value={store.formData.title} name="title" />
+              <textarea onChange={store.updateFormDataField} value={store.formData.body} name="body" />
               <button type="submit"> create note</button>
             </form>
           </div>
