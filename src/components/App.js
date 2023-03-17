@@ -117,10 +117,10 @@ function App() {
     
     // fetchNotes(); // not a good way
     const newNotes = [...notes];
-    const updatedNoteIndex = notes.findIndex((note) => {
+    const IndexOFupdatedNote = notes.findIndex((note) => {
       return note._id == updateNote._id;
     })
-    newNotes[updatedNoteIndex] = res.data;
+    newNotes[IndexOFupdatedNote] = res.data;
     setNotes(newNotes);
 
 
@@ -130,6 +130,7 @@ function App() {
 //___________________________________________________________________________________________________________________
 
   const toggleUpdateForm = (note) => {
+    // console.log(note)
     setUpdateNote({ title: note.title, body: note.body, _id: note._id });
   }
 
@@ -149,7 +150,7 @@ function App() {
               <h5>{note.body}</h5>
               <button onClick={() => deleteNote(note._id)}>delete note</button>  {/*//Don't directly call functions in onClick event. It will recursively call the method. So make the onClick input as a callback method. */}
               {/* https://stackoverflow.com/questions/44833583/expected-onclick-listener-to-be-a-function-instead-got-type-object-react-redu */}
-              <button onClick={() => toggleUpdateForm(note)}>update note</button>
+              <button onClick={() => store.toggleUpdateForm(note)}>update note</button>
             </div>
 
           );
@@ -159,8 +160,10 @@ function App() {
 
       <div>
 
-        {!updateNote._id && ( // must need to wrap in div tag
+        {!store.updateNote._id && ( // must need to wrap in div tag
+        console.log(store.updateNote._id),
           <div> 
+            
             <h1>create notes</h1>
             <form onSubmit={store.createNote}>
               <input onChange={store.updateFormDataField} value={store.formData.title} name="title" />
@@ -168,16 +171,16 @@ function App() {
               <button type="submit"> create note</button>
             </form>
           </div>
-        )}
+        )} 
 
 
-        {updateNote._id && (
+        {store.updateNote._id && (
           <div>
             <h1>update note</h1>
-            <form onSubmit={updateNoteINdb}>
-              <input onChange={updateFormFieldChange} value={updateNote.title} name="title" />
-              <textarea onChange={updateFormFieldChange} value={updateNote.body} name="body" />
-              <button onClick="updateNoteINdb" type="submit"> update note</button>
+            <form onSubmit={store.updateNoteINdb}>
+              <input onChange={store.updateFormFieldChange} value={store.updateNote.title} name="title" />
+              <textarea onChange={store.updateFormFieldChange} value={store.updateNote.body} name="body" />
+              <button type="submit"> update note</button>
             </form>
           </div>
         )}
