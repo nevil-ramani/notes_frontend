@@ -3,6 +3,7 @@ import axios from 'axios'
 
 const notesStore = create((set) => ({
   notes: null,
+
   formData: {
     title: "",
     body: ""
@@ -98,10 +99,21 @@ const notesStore = create((set) => ({
   updateNoteINdb: async (e) => {
     e.preventDefault();
     
-      const { updateNote } = notesStore.getState();
+      const { updateNote, notes } = notesStore.getState();
       console.log(updateNote._id);
       // console.log(updateNote);
       const res = await axios.put(`http://localhost:3001/notes/${updateNote._id}`, updateNote);
+
+      const newNotes = [...notes];
+
+      const IndexOFupdatedNote = notes.findIndex((note) => {
+        return note._id == updateNote._id;
+      })
+
+      newNotes[IndexOFupdatedNote] = res.data;
+
+      set({ notes: newNotes });
+
 
     
     
