@@ -83,10 +83,10 @@ function App() {
             //   return age >= 18;
             //  }
 
-    const NewNotes = [...notes].filter((note) => {
+    const newNotes = [...notes].filter((note) => {
       return note._id !== id;
     })
-    setNotes(NewNotes);
+    setNotes(newNotes);
   }
 //___________________________________________________________________________________________________________________
   //update note
@@ -148,7 +148,7 @@ function App() {
             <div key={note._id}>
               <h3>{note.title}</h3>
               <h5>{note.body}</h5>
-              <button onClick={() => deleteNote(note._id)}>delete note</button>  {/*//Don't directly call functions in onClick event. It will recursively call the method. So make the onClick input as a callback method. */}
+              <button onClick={() => store.deleteNote(note._id)}>delete note</button>  {/*//Don't directly call functions in onClick event. It will recursively call the method. So make the onClick input as a callback method. */}
               {/* https://stackoverflow.com/questions/44833583/expected-onclick-listener-to-be-a-function-instead-got-type-object-react-redu */}
               <button onClick={() => store.toggleUpdateForm(note)}>update note</button>
             </div>
