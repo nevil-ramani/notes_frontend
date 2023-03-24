@@ -3,7 +3,7 @@ import axios from 'axios';
 import notesStore from '../stores/notesStore';
 
 
-function App() {
+const App = () => {
   
 
   const [notes, setNotes] = useState();
