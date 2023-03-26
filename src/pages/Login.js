@@ -15,10 +15,10 @@ const Login = () => {
   return (
     <div>
 
-      <form onSubmit={store.loginSubmit}>
+      <form>
         <input onChange={store.updateLoginFormFileldChange} value={store.formData.email} type="email" name="email"></input>
         <input onChange={store.updateLoginFormFileldChange} value={store.formData.password} type="password" name="password"></input>
-        <button type="submit">login</button>
+        <button onClick={store.loginSubmit} type="submit">login</button>
         </form>  
     </div>
   )

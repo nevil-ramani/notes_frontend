@@ -4,11 +4,11 @@ import axios from 'axios'
 
 const loginStore = create((set) => ({
 
-    login: null,
+    loggedIn: null,
 
     formData: {
         email: "",
-        password: ""
+        password: "",
       },
 
 
@@ -37,10 +37,13 @@ const loginStore = create((set) => ({
   loginSubmit: async (e) => {
     e.preventDefault();
 
-    const { formData, login } = loginStore.getState();
+    const { formData,loggedIn } = loginStore.getState();
     const res = await axios.post('http://localhost:3001/notes/login', formData);
     console.log(res);
     console.log(formData)
+
+
+    set({ loggedIn: true})
 
     set({
       formData: {
@@ -48,8 +51,18 @@ const loginStore = create((set) => ({
         password: ""
       }
     })
-
   },
+
+
+  checkAuth: async() => {
+    try{
+    await axios.get('http://localhost:3001/checkauth')
+    set({ loggedIn: true})
+
+    }catch{
+      set({ loggedIn: false})
+    }
+  }
     
 })
 )
